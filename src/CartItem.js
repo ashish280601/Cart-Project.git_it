@@ -2,16 +2,6 @@ import React from 'react';
 
 // class component always using camel-case convention
 class CartItem extends React.Component {
-    constructor() {
-        // super is used to call the constructor of the parent class if a developer is inheriting
-        super();
-        this.state = {
-            price: 999,
-            title: 'Mobile Phone',
-            qty: 1,
-            img: ''
-        }
-    }
     // creating an function
     // by using arrow function it automatically bind the function of their instance i.e cartItem this.increaseQuantity.bind(this)
     increaseQuantity = () => {
@@ -40,7 +30,8 @@ class CartItem extends React.Component {
     }
     render() {
         // object destructuring
-        const { price, title, qty } = this.state;
+        console.log('this.props', this.props);
+        const { price, title, qty } = this.props.product;
         return (
             <div className='cart-item'>
                 <div className='left-block'>
