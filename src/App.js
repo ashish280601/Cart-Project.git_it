@@ -9,23 +9,23 @@ class App extends React.Component {
     this.state = {
       products: [
         {
-          price: 99,
+          price: 1500,
           title: 'Watch',
           qty: 1,
           img: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8d2F0Y2h8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
           id: 1
         },
         {
-          price: 999,
+          price: 120000,
           title: 'Apple Phone',
-          qty: 4,
+          qty: 1,
           img: 'https://images.unsplash.com/photo-1592832122594-c0c6bad718b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjBwaG9uZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60',
           id: 2
         },
         {
-          price: 22999,
+          price: 45000,
           title: 'DELL Laptop',
-          qty: 15,
+          qty: 1,
           img: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXN1cyUyMGxhcHRvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60',
           id: 3
         }
@@ -86,8 +86,11 @@ getCartTotal = () => {
   let cartTotal = 0;
 
   products.map((product) => {
-    cartTotal = cartTotal + product.qty * product.price;
-  })
+    if (product.qty > 0) {
+      cartTotal = cartTotal + product.qty * product.price;
+    }
+    return '';
+  });
 
   return cartTotal;
 }
