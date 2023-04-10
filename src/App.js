@@ -1,37 +1,42 @@
 import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
+import { firestore } from "./firebase";
+
 
 class App extends React.Component {
   constructor() {
     // super is used to call the constructor of the parent class if a developer is inheriting
     super();
     this.state = {
-      products: [
-        {
-          price: 1500,
-          title: 'Watch',
-          qty: 1,
-          img: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8d2F0Y2h8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-          id: 1
-        },
-        {
-          price: 120000,
-          title: 'Apple Phone',
-          qty: 1,
-          img: 'https://images.unsplash.com/photo-1592832122594-c0c6bad718b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjBwaG9uZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60',
-          id: 2
-        },
-        {
-          price: 45000,
-          title: 'DELL Laptop',
-          qty: 1,
-          img: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXN1cyUyMGxhcHRvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60',
-          id: 3
-        }
-      ]
+      products: [],
+      loading: true
     }
   }
+
+  componentDidMount() {
+    //fetching all the products from the cloud firestore
+    firestore
+      //query for fecthing the product which we want as per our query
+      .collection("products") //getting all the products
+      // .where('price','>=', 999) // after fetching db we should write query
+      .onSnapshot((snapshot) => {
+        const products = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          data["id"] = doc.id;
+          return data;
+        });
+
+        this.setState({
+          products: products,
+          loading: false,
+        });
+      });
+  }
+  
+
+
+
   handleIncreaseQuantity = (product) => {
     console.log('Hey please inc the qty of', product);
     const { products } = this.state;
@@ -95,7 +100,7 @@ getCartTotal = () => {
   return cartTotal;
 }
 render() {
-  const { products } = this.state;
+  const { products, loading } = this.state;
   return (
     <div className="App">
       <Navbar count={this.getCartCount()} />
@@ -105,6 +110,7 @@ render() {
         onDecreaseQuantity={this.handleDecreaseQuantity}
         onDeleteProduct={this.handleDeleteProduct}
       />
+      {loading && <h1>Loading products ...</h1>}
       <div style={{fontSize: 20, padding: 10}}>TOTAL: {this.getCartTotal()} </div>
     </div>
   );

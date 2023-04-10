@@ -7,17 +7,15 @@ const Cart = (props) => {
     return (
         <div className='cart'>
             {/* mapping over an array of an constructor */}
-            {products.map((product) => {
-                return (
-                    <CartItem
-                        product={product}
-                        key={product.id}
-                        onIncreaseQuantity={props.onIncreaseQuantity}
-                        onDecreaseQuantity={props.onDecreaseQuantity}
-                        onDeleteProduct={props.onDeleteProduct}
-                    />
-                )
-            })}
+            {products.map((product) => 
+                <CartItem
+                    key={product.id}
+                    product={product}
+                    onIncreaseQuantity={props.onIncreaseQuantity}
+                    onDecreaseQuantity={props.onDecreaseQuantity}
+                    onDeleteProduct={props.onDeleteProduct}
+                />
+            )}
         </div>
     )
 }
