@@ -119,22 +119,22 @@ getCartTotal = () => {
   return cartTotal;
 }
 
-addProduct = () => {
-  firestore
-    .collection('products')
-    .add({
-      img: '',
-      price: 900,
-      qty: 3,
-      title: 'Washing Machine'
-    })
-    .then((docRef) => {
-      console.log('Products has been added',docRef);
-    })
-    .catch((error) => {
-      console.log('Error : ',error);
-    })
-}
+// addProduct = () => {
+//   firestore
+//     .collection('products')
+//     .add({
+//       img: '',
+//       price: 900,
+//       qty: 3,
+//       title: 'Washing Machine'
+//     })
+//     .then((docRef) => {
+//       console.log('Products has been added',docRef);
+//     })
+//     .catch((error) => {
+//       console.log('Error : ',error);
+//     })
+// }
 
 render() {
   const { products, loading } = this.state;
